@@ -21,7 +21,6 @@ It combines physics modeling, numerical optimization, and modern Rust engineerin
 
 - **Output**
   - Produces voltage sequences for each electrode as CSV files.
-  - Includes a Jupyter notebook for visualization and analysis.
 
 In short: Ionwave automatically finds the electrode voltages needed to move an ion smoothly along the trap without significantly changing its oscillation frequency.
 
@@ -65,13 +64,9 @@ In short: Ionwave automatically finds the electrode voltages needed to move an i
 - **Outputs and analysis**
   - CSV voltage waveforms for all electrodes
   - Example binary (`demo.rs`) that builds and solves a trap geometry
-  - Jupyter notebook (`demo.ipynb`) for visualization and analysis:
-    - Plot electrode waveforms
-    - Verify symmetry
-    - Compute smoothness metrics
+
 
 - **Scalability and extensibility**
   - Designed for traps with hundreds of electrodes
   - Modular basis functions (extend with autodiff or FEM solutions)
   - Parallel and sparse-ready algorithms for HPC use
-  - Roadmap for future features: autodifferentiation, FEM import, optimal control
