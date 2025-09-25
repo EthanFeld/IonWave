@@ -19,7 +19,7 @@ fn main() -> anyhow::Result<()> {
     // target axial frequency and matching rf curvature
     let omega_axial = 2.0 * std::f64::consts::PI * 1.5e6; // rad s
     let target_curv = m * omega_axial * omega_axial / q;
-
+    
     // choose axial along z
     let axial_dir = Vec3 { x: 0.0, y: 0.0, z: 1.0 };
 
@@ -27,11 +27,12 @@ fn main() -> anyhow::Result<()> {
     // kr is large so radial modes are well confined
     let rf = RfPseudo { kr: 1.0e10, kz: target_curv };
 
+
     // build dc bases
     // arrange gaussian lobes near z axis, staggered in x for steering
     let mut dc: Vec<Box<dyn PotentialBasis>> = Vec::new();
     let sigma = 40e-6;
-    let dc_scale = 0.05;    // gentle dc influence
+    let dc_scale = 0.0001;    // gentle dc influence
     let z_positions: Vec<f64> = (-4..=4).map(|k| k as f64 * 63e-6).collect();
     for (idx, zc) in z_positions.iter().enumerate() {
         let left = GaussianBasis {
@@ -77,8 +78,11 @@ fn main() -> anyhow::Result<()> {
     }
 
     // solver options
-    let opts = LsqOptions { lambda: 1e-2, voltage_limit: Some(5.0) };
-
+let opts = LsqOptions { 
+    lambda: 1e-2, 
+    voltage_limit: Some(5.0), 
+    ..Default::default() 
+};
     // solve right and left segments
     let volts_right = solve_waveform(&model, &waypoints, q, m, false, &opts)
         .expect("solve right");
